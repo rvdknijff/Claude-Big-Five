@@ -1,0 +1,180 @@
+@import 'tailwindcss';
+
+/* =========================================================================
+   NIGHTSHIFT — design tokens
+   Brutalist club-poster. Monochrome, one acid accent, kinetic.
+   ========================================================================= */
+@theme {
+  --color-black: #0a0a0a;
+  --color-near: #141414;
+  --color-line: #2a2a2a;
+  --color-bone: #ece9dd;
+  --color-ash: #86847a;
+  --color-acid: #ceff1a;
+  --color-acid-dim: #9bc019;
+
+  --font-display: 'Unbounded Variable', 'Unbounded', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --container-page: 90rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    background: var(--color-black);
+  }
+
+  body {
+    background-color: var(--color-black);
+    color: var(--color-bone);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: inherit;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-acid);
+    color: var(--color-black);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-acid);
+    outline-offset: 2px;
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* hide the native cursor only where the custom one runs */
+  @media (hover: hover) and (pointer: fine) {
+    body:not(.reduced-motion) {
+      cursor: none;
+    }
+    body:not(.reduced-motion) a,
+    body:not(.reduced-motion) button,
+    body:not(.reduced-motion) input,
+    body:not(.reduced-motion) select,
+    body:not(.reduced-motion) textarea,
+    body:not(.reduced-motion) [role='slider'] {
+      cursor: none;
+    }
+  }
+}
+
+/* =========================================================================
+   Utilities
+   ========================================================================= */
+
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+}
+
+@utility page-x {
+  padding-inline: 1rem;
+  @media (width >= 48rem) {
+    padding-inline: 1.75rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* monochrome, high-contrast image treatment */
+@utility mono {
+  filter: grayscale(1) contrast(1.15) brightness(0.85);
+}
+
+/* fixed film-grain overlay */
+.grain-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.reduced-motion .grain-layer {
+  animation: none;
+}
+
+@keyframes grain-shift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-4%, 3%);
+  }
+  40% {
+    transform: translate(3%, -5%);
+  }
+  60% {
+    transform: translate(-6%, 2%);
+  }
+  80% {
+    transform: translate(5%, 4%);
+  }
+}
+
+body:not(.reduced-motion) .grain-layer {
+  animation: grain-shift 0.6s steps(2) infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee var(--marquee-dur, 30s) linear infinite;
+}
+
+.reduced-motion .marquee-track {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
