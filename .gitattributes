@@ -1,2 +1,10 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Normalise line endings: LF in the repo, LF on checkout everywhere.
+* text=auto eol=lf
+
+# Treat these as binary (no diff, no eol conversion).
+*.webp binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.woff2 binary
+*.ico binary
