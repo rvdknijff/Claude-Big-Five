@@ -1,0 +1,125 @@
+@import 'tailwindcss';
+
+/* =========================================================================
+   NORTHBOUND EXPEDITIONS — design tokens
+   Outdoor editorial magazine. The photography is the hero.
+   ========================================================================= */
+@theme {
+  --color-paper: #f2efe6;
+  --color-paper-dim: #e7e2d4;
+  --color-bark: #17190f;
+  --color-ink: #24261c;
+  --color-ink-soft: #4c4f40;
+  --color-ink-faint: #7c7c6b;
+  --color-forest: #33412f;
+  --color-forest-deep: #1e281c;
+  --color-moss: #6b7a58;
+  --color-stone: #877f6d;
+  --color-stone-light: #c6bfad;
+  --color-signal: #d8602f;
+
+  --font-display: 'Newsreader Variable', 'Newsreader', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --tracking-label: 0.16em;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --container-page: 84rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.65;
+    font-feature-settings: 'ss01', 'cv05';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.012em;
+    color: inherit;
+    text-wrap: balance;
+  }
+
+  h1 em,
+  h2 em,
+  h3 em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* =========================================================================
+   Utilities
+   ========================================================================= */
+
+@utility label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+@utility page-x {
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 3rem;
+  }
+}
+
+/* thin editorial hairline */
+@utility rule {
+  border-top: 1px solid color-mix(in oklab, var(--color-ink) 18%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
