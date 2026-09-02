@@ -1,0 +1,146 @@
+@import 'tailwindcss';
+
+/* =========================================================================
+   BLACKLINE MOTORWORKS — design tokens
+   Dark motorsport engineering. One accent. Hard edges. Technical grids.
+   ========================================================================= */
+@theme {
+  --color-base: #0a0a0b;
+  --color-surface: #121316;
+  --color-surface-2: #191b1f;
+  --color-line: #26282e;
+  --color-line-bright: #3a3d45;
+  --color-fg: #eceae4;
+  --color-fg-muted: #9a9ea6;
+  --color-fg-dim: #7c8088;
+  --color-signal: #e6431d;
+  --color-signal-bright: #ff5a32;
+
+  --font-display: 'Archivo Variable', 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Archivo Variable', 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --text-display: clamp(2.75rem, 8vw, 7rem);
+  --text-display--line-height: 0.94;
+  --text-display--letter-spacing: -0.02em;
+
+  --tracking-label: 0.22em;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --container-page: 88rem;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--color-line-bright) var(--color-base);
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-fg);
+    font-family: var(--font-body);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-base);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-signal-bright);
+    outline-offset: 3px;
+  }
+
+  /* Consistent, controlled focus for the whole workshop UI */
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* =========================================================================
+   Utilities
+   ========================================================================= */
+
+/* Uppercase monospace measurement label — used for section eyebrows,
+   spec readouts and coordinate marks. */
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-fg-dim);
+}
+
+/* Technical blueprint grid, drawn with two repeating gradients. */
+@utility bl-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--color-line) 60%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-line) 60%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* Chamfered corner — the Blackline CTA signature (a cut top-right + bottom-left). */
+@utility chamfer {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+@utility page-x {
+  padding-inline: 1.5rem;
+  @media (width >= 48rem) {
+    padding-inline: 2.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 4rem;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
